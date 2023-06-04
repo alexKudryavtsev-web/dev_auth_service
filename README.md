@@ -1,12 +1,17 @@
 I developed this module in order to use it in my projects in the future.
 
-*Advanced Auth Module*:
+_Advanced Auth Module_:
 
 1. Local
 2. JWT
 3. GitHub
 
-*Prisma ORM*
+_Prisma ORM_
+
+Commands:
+
+1. Create migration:
+   `npx prisma migrate dev --name`
 
 ---
 

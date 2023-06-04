@@ -11,7 +11,7 @@ export class AuthController {
   login(@Request() req) {
     const token = this.jwtService.sign(
       {
-        userId: req.id,
+        userId: req.user.id,
       },
       {
         secret: process.env.JWT_SECRET,
