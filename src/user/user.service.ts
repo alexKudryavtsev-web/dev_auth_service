@@ -40,10 +40,18 @@ export class UserService {
     });
   }
 
-  async getUserByEmail(email: string): Promise<User & { password?: string }> {
+  async getUserByEmail(email: string): Promise<User> {
     return await this.prisma.user.findUnique({
       where: {
         email,
+      },
+    });
+  }
+
+  async getUserById(id: number): Promise<User> {
+    return await this.prisma.user.findUnique({
+      where: {
+        id,
       },
     });
   }

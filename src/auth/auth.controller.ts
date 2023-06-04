@@ -1,23 +1,21 @@
 import { Controller, Post, UseGuards, Request, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtService } from '@nestjs/jwt';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private jwtService: JwtService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
   @UseGuards(AuthGuard('local'))
   login(@Request() req) {
-    const token = this.jwtService.sign(
-      {
-        userId: req.user.id,
-      },
-      {
-        secret: process.env.JWT_SECRET,
-      },
-    );
-    return { token };
+    return this.authService.login(req.user);
+  }
+
+  @Post('refresh')
+  @UseGuards(AuthGuard('jwt'))
+  refresh(@Request() req) {
+    return this.authService.login(req.user);
   }
 
   @Get('github')

@@ -8,9 +8,10 @@ import { LocalStrategy } from './strategy/local.strategy';
 import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
 import { PrismaService } from 'src/prisma.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [PassportModule],
+  imports: [PassportModule, ConfigModule],
   providers: [
     JwtStrategy,
     AuthService,
