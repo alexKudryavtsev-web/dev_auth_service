@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { User } from '@prisma/client';
 import { GithubProfile } from 'src/auth/types/githubProfile.type';
@@ -14,6 +14,16 @@ export class UserService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
+    const candidate = await this.prisma.user.findUnique({
+      where: {
+        email: createUserDto.email,
+      },
+    });
+
+    if (candidate) {
+      throw new BadRequestException('email is already busy');
+    }
+
     return await this.prisma.user.create({
       data: {
         email: createUserDto.email,
